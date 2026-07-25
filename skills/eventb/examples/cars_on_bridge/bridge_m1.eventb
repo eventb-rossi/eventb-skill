@@ -1,0 +1,62 @@
+MACHINE bridge_m1
+REFINES
+    bridge_m0
+SEES
+    bridge_ctx
+VARIABLES
+    a
+    b
+    c
+INVARIANTS
+    @inv1 a ∈ ℕ
+    @inv2 b ∈ ℕ
+    @inv3 c ∈ ℕ
+    @inv4 a + b + c = n
+    @inv5 a = 0 ∨ c = 0
+VARIANT
+    2 ∗ a + b
+EVENTS
+    EVENT INITIALISATION
+    THEN
+        @act1 a ≔ 0
+        @act2 b ≔ 0
+        @act3 c ≔ 0
+    END
+
+    EVENT ML_out
+    REFINES
+        ML_out
+    WHERE
+        @grd1 a + b < d
+        @grd2 c = 0
+    THEN
+        @act1 a ≔ a + 1
+    END
+
+    EVENT ML_in
+    REFINES
+        ML_in
+    WHERE
+        @grd1 0 < c
+    THEN
+        @act1 c ≔ c − 1
+    END
+
+    convergent EVENT IL_in
+    WHERE
+        @grd1 0 < a
+    THEN
+        @act1 a ≔ a − 1
+        @act2 b ≔ b + 1
+    END
+
+    convergent EVENT IL_out
+    WHERE
+        @grd1 0 < b
+        @grd2 a = 0
+    THEN
+        @act1 b ≔ b − 1
+        @act2 c ≔ c + 1
+    END
+END
+

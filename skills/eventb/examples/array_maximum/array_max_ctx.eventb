@@ -1,0 +1,9 @@
+CONTEXT array_max_ctx
+CONSTANTS
+    n
+    f
+AXIOMS
+    @axm1 n ∈ ℕ1
+    @axm2 f ∈ 1 ‥ n → ℤ
+END
+

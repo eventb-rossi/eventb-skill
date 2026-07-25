@@ -1,0 +1,8 @@
+CONTEXT bridge_ctx
+CONSTANTS
+    d
+AXIOMS
+    @axm1 d ∈ ℕ
+    @axm2 d > 0
+END
+

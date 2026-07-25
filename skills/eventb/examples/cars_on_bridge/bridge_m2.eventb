@@ -1,0 +1,129 @@
+MACHINE bridge_m2
+REFINES
+    bridge_m1
+SEES
+    bridge_ctx2
+VARIABLES
+    a
+    b
+    c
+    ml_tl
+    il_tl
+    ml_pass
+    il_pass
+INVARIANTS
+    @inv1 ml_tl ∈ COLOR
+    @inv2 il_tl ∈ COLOR
+    @inv3 ml_tl = green ⇒ a + b < d ∧ c = 0
+    @inv4 il_tl = green ⇒ 0 < b ∧ a = 0
+    @inv5 ml_tl = red ∨ il_tl = red
+    @inv6 ml_pass ∈ BOOL
+    @inv7 il_pass ∈ BOOL
+    @inv8 ml_tl = red ⇒ ml_pass = TRUE
+    @inv9 il_tl = red ⇒ il_pass = TRUE
+VARIANT
+    b_2_n(ml_pass) + b_2_n(il_pass)
+EVENTS
+    EVENT INITIALISATION
+    THEN
+        @act1 a ≔ 0
+        @act2 b ≔ 0
+        @act3 c ≔ 0
+        @act4 ml_tl ≔ red
+        @act5 il_tl ≔ red
+        @act6 ml_pass ≔ TRUE
+        @act7 il_pass ≔ TRUE
+    END
+
+    EVENT ML_out_1
+    REFINES
+        ML_out
+    WHERE
+        @grd1 ml_tl = green
+        @grd2 a + b + 1 ≠ d
+    THEN
+        @act1 a ≔ a + 1
+        @act2 ml_pass ≔ TRUE
+    END
+
+    EVENT ML_out_2
+    REFINES
+        ML_out
+    WHERE
+        @grd1 ml_tl = green
+        @grd2 a + b + 1 = d
+    THEN
+        @act1 a ≔ a + 1
+        @act2 ml_tl ≔ red
+        @act3 ml_pass ≔ TRUE
+    END
+
+    EVENT IL_out_1
+    REFINES
+        IL_out
+    WHERE
+        @grd1 il_tl = green
+        @grd2 b ≠ 1
+    THEN
+        @act1 b ≔ b − 1
+        @act2 c ≔ c + 1
+        @act3 il_pass ≔ TRUE
+    END
+
+    EVENT IL_out_2
+    REFINES
+        IL_out
+    WHERE
+        @grd1 il_tl = green
+        @grd2 b = 1
+    THEN
+        @act1 b ≔ b − 1
+        @act2 c ≔ c + 1
+        @act3 il_tl ≔ red
+        @act4 il_pass ≔ TRUE
+    END
+
+    EVENT ML_in
+    REFINES
+        ML_in
+    WHERE
+        @grd1 0 < c
+    THEN
+        @act1 c ≔ c − 1
+    END
+
+    EVENT IL_in
+    REFINES
+        IL_in
+    WHERE
+        @grd1 0 < a
+    THEN
+        @act1 a ≔ a − 1
+        @act2 b ≔ b + 1
+    END
+
+    convergent EVENT ML_tl_green
+    WHERE
+        @grd1 ml_tl = red
+        @grd2 a + b < d
+        @grd3 c = 0
+        @grd4 il_pass = TRUE
+    THEN
+        @act1 ml_tl ≔ green
+        @act2 il_tl ≔ red
+        @act3 ml_pass ≔ FALSE
+    END
+
+    convergent EVENT IL_tl_green
+    WHERE
+        @grd1 il_tl = red
+        @grd2 0 < b
+        @grd3 a = 0
+        @grd4 ml_pass = TRUE
+    THEN
+        @act1 il_tl ≔ green
+        @act2 ml_tl ≔ red
+        @act3 il_pass ≔ FALSE
+    END
+END
+

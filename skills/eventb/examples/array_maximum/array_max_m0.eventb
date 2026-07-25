@@ -1,0 +1,25 @@
+MACHINE array_max_m0
+SEES
+    array_max_ctx
+VARIABLES
+    m
+INVARIANTS
+    @inv1 m ∈ ℤ
+EVENTS
+    EVENT INITIALISATION
+    THEN
+        @act1 m :∈ ℤ
+    END
+
+    anticipated EVENT progress
+    THEN
+        @act1 m :∈ ℤ
+    END
+
+    EVENT final
+    WHERE
+        @grd1 m ∈ ran(f)
+        @grd2 ∀x·x ∈ 1 ‥ n ⇒ f(x) ≤ m
+    END
+END
+

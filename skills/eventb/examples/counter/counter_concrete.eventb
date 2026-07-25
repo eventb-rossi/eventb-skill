@@ -1,0 +1,56 @@
+MACHINE counter_concrete
+REFINES
+    counter_abstract
+SEES
+    counter_ctx
+VARIABLES
+    level
+    step
+INVARIANTS
+    @inv1 level ∈ ℕ
+    @inv2 step ∈ ℕ1
+    @inv3 step ≤ cap
+    @glue count = level
+EVENTS
+    EVENT INITIALISATION
+    THEN
+        @act1 level ≔ 0
+        @act2 step ≔ 1
+    END
+
+    EVENT add
+    REFINES
+        add
+    ANY
+        k
+    WHERE
+        @grd1 k ∈ ℕ1
+        @grd2 level + k ∗ step ≤ cap
+    WITH
+        @d d = k ∗ step
+    THEN
+        @act1 level ≔ level + k ∗ step
+    END
+
+    EVENT remove
+    REFINES
+        remove
+    WHERE
+        @grd1 level ≥ step
+    WITH
+        @count' count' = level − step
+    THEN
+        @act1 level ≔ level − step
+    END
+
+    EVENT set_step
+    ANY
+        s
+    WHERE
+        @grd1 s ∈ ℕ1
+        @grd2 s ≤ cap
+    THEN
+        @act1 step ≔ s
+    END
+END
+

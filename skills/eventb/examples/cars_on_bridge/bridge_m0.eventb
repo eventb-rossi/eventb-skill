@@ -1,0 +1,29 @@
+MACHINE bridge_m0
+SEES
+    bridge_ctx
+VARIABLES
+    n
+INVARIANTS
+    @inv1 n ∈ ℕ
+    @inv2 n ≤ d
+EVENTS
+    EVENT INITIALISATION
+    THEN
+        @act1 n ≔ 0
+    END
+
+    EVENT ML_out
+    WHERE
+        @grd1 n < d
+    THEN
+        @act1 n ≔ n + 1
+    END
+
+    EVENT ML_in
+    WHERE
+        @grd1 n > 0
+    THEN
+        @act1 n ≔ n − 1
+    END
+END
+

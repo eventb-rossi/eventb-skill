@@ -1,0 +1,7 @@
+interface:
+  display_name: "Event-B"
+  short_description: "Develop and model-check Event-B specifications"
+  default_prompt: "Use $eventb to turn these requirements into the smallest justified, validated, and model-checked Event-B model."
+
+policy:
+  allow_implicit_invocation: true

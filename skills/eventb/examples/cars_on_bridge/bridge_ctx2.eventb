@@ -1,0 +1,17 @@
+CONTEXT bridge_ctx2
+EXTENDS
+    bridge_ctx
+SETS
+    COLOR
+CONSTANTS
+    red
+    green
+    b_2_n
+AXIOMS
+    @axm1 COLOR = {green, red}
+    @axm2 green ≠ red
+    @axm3 b_2_n ∈ BOOL → {0, 1}
+    @axm4 b_2_n(TRUE) = 1
+    @axm5 b_2_n(FALSE) = 0
+END
+

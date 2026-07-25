@@ -1,0 +1,32 @@
+MACHINE counter_abstract
+SEES
+    counter_ctx
+VARIABLES
+    count
+INVARIANTS
+    @inv1 count ∈ ℕ
+    @inv2 count ≤ cap
+EVENTS
+    EVENT INITIALISATION
+    THEN
+        @act1 count ≔ 0
+    END
+
+    EVENT add
+    ANY
+        d
+    WHERE
+        @grd1 d ∈ ℕ1
+        @grd2 count + d ≤ cap
+    THEN
+        @act1 count ≔ count + d
+    END
+
+    EVENT remove
+    WHERE
+        @grd1 count > 0
+    THEN
+        @act1 count :∣ count' ∈ ℕ ∧ count' < count
+    END
+END
+

@@ -1,0 +1,50 @@
+MACHINE array_max_m1
+REFINES
+    array_max_m0
+SEES
+    array_max_ctx
+VARIABLES
+    m
+    i
+INVARIANTS
+    @inv1 i ∈ 1 ‥ n
+    @inv2 m ∈ f[1 ‥ i]
+    @inv3 ∀x·x ∈ 1 ‥ i ⇒ f(x) ≤ m
+VARIANT
+    n − i
+EVENTS
+    EVENT INITIALISATION
+    THEN
+        @act1 m ≔ f(1)
+        @act2 i ≔ 1
+    END
+
+    convergent EVENT keep
+    REFINES
+        progress
+    WHERE
+        @grd1 i ≠ n
+        @grd2 f(i + 1) ≤ m
+    THEN
+        @act1 i ≔ i + 1
+    END
+
+    convergent EVENT update
+    REFINES
+        progress
+    WHERE
+        @grd1 i ≠ n
+        @grd2 f(i + 1) > m
+    THEN
+        @act1 i ≔ i + 1
+        @act2 m ≔ f(i + 1)
+    END
+
+    EVENT final
+    REFINES
+        final
+    WHERE
+        @grd1 i = n
+    END
+END
+

@@ -1,0 +1,50 @@
+MACHINE array_max_m2
+REFINES
+    array_max_m1
+SEES
+    array_max_ctx
+VARIABLES
+    m
+    i
+    p
+INVARIANTS
+    @inv1 p ∈ 1 ‥ i
+    @inv2 f(p) = m
+EVENTS
+    EVENT INITIALISATION
+    THEN
+        @act1 m ≔ f(1)
+        @act2 i ≔ 1
+        @act3 p ≔ 1
+    END
+
+    EVENT keep
+    REFINES
+        keep
+    WHERE
+        @grd1 i ≠ n
+        @grd2 f(i + 1) ≤ m
+    THEN
+        @act1 i ≔ i + 1
+    END
+
+    EVENT update
+    REFINES
+        update
+    WHERE
+        @grd1 i ≠ n
+        @grd2 f(i + 1) > m
+    THEN
+        @act1 i ≔ i + 1
+        @act2 m ≔ f(i + 1)
+        @act3 p ≔ i + 1
+    END
+
+    EVENT final
+    REFINES
+        final
+    WHERE
+        @grd1 i = n
+    END
+END
+

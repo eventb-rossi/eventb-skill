@@ -1,0 +1,7 @@
+CONTEXT counter_ctx
+CONSTANTS
+    cap
+AXIOMS
+    @axm1 cap ∈ ℕ1
+END
+
