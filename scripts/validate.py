@@ -448,6 +448,58 @@ def check_conventions(report: Report, skill_dir: Path) -> None:
     report.check(name, "example-files-documented", documented)
 
 
+def check_readme(report: Report) -> None:
+    """Hold the README's own factual claims to the repository it describes.
+
+    A README that lists line counts, or links a skill that does not exist, is the most
+    common way one of these repositories ends up lying about itself: nothing breaks, so
+    nothing catches it. Check the claims that are mechanically checkable.
+    """
+    readme = REPO / "README.md"
+    if not readme.is_file():
+        report.check("repository", "readme-present", "no README.md")
+        return
+    text = readme.read_text()
+
+    # Table rows of the form: | [`name.md`](path/to/name.md) | 123 | ... |
+    problems = []
+    for match in re.finditer(r"\[`([^`]+)`\]\(([^)]+\.md)\)\s*\|\s*(\d+)\s*\|", text):
+        target = REPO / match.group(2)
+        if not target.is_file():
+            problems.append(f"README lists {match.group(2)}, which does not exist")
+            continue
+        actual = len(target.read_text().splitlines())
+        claimed = int(match.group(3))
+        if actual != claimed:
+            problems.append(
+                f"README says {match.group(1)} is {claimed} lines; it is {actual}"
+            )
+    report.check("repository", "readme-line-counts", problems)
+
+    # Prose claims of the form: `SKILL.md` is 189 lines
+    problems = []
+    for match in re.finditer(r"`(SKILL\.md)` is (\d+) lines", text):
+        actual = max(
+            len((d / "SKILL.md").read_text().splitlines())
+            for d in SKILLS_DIR.iterdir()
+            if (d / "SKILL.md").is_file()
+        )
+        if actual != int(match.group(2)):
+            problems.append(f"README says SKILL.md is {match.group(2)} lines; it is {actual}")
+    report.check("repository", "readme-prose-claims", problems)
+
+    # Every skill must appear in the README's skill table, and every skill link must
+    # point at a skill that exists.
+    problems = []
+    for skill_dir in sorted(d for d in SKILLS_DIR.iterdir() if (d / "SKILL.md").is_file()):
+        if f"skills/{skill_dir.name}/SKILL.md" not in text:
+            problems.append(f"skill {skill_dir.name!r} is not listed in the README")
+    for match in re.finditer(r"\(skills/([^/)]+)/SKILL\.md\)", text):
+        if not (SKILLS_DIR / match.group(1) / "SKILL.md").is_file():
+            problems.append(f"README links skills/{match.group(1)}/SKILL.md, which does not exist")
+    report.check("repository", "readme-lists-skills", problems)
+
+
 # ---------------------------------------------------------------------------------
 # Event-B gates
 # ---------------------------------------------------------------------------------
@@ -609,6 +661,8 @@ def main() -> int:
         "no-stray-skill-md",
         [f"{p} is outside skills/; it would be discovered as a separate skill" for p in stray],
     )
+
+    check_readme(report)
 
     for skill_dir in skill_dirs:
         check_spec(report, skill_dir)
