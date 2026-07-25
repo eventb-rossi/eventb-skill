@@ -6,6 +6,15 @@ description: >
   rossi, ProB/model checking, or requirements that need a discrete formal model.
   The core workflow uses rossi plus eventb-animate; interactive proof authoring is
   out of scope.
+license: Apache-2.0
+compatibility: >-
+  Requires the rossi CLI 0.1.8+ and eventb-animate 6.4+ on PATH (Homebrew tap
+  eventb-rossi/tap, APT, COPR, or Scoop), and Java 21+ for eventb-animate. No
+  network access needed at run time.
+metadata:
+  author: "eventb-rossi"
+  version: "1.1.0"
+  homepage: "https://github.com/eventb-rossi/eventb-skill"
 ---
 
 # Developing Event-B models
@@ -17,7 +26,7 @@ not author interactive Rodin proofs.
 
 ## 1. Check the required tools
 
-Require `rossi` 0.1.7+ and `eventb-animate` 6.3+. Check them; never install or
+Require `rossi` 0.1.8+ and `eventb-animate` 6.4+. Check them; never install or
 upgrade them yourself. If either is absent or older, stop and ask the user to do it.
 
 ```sh
