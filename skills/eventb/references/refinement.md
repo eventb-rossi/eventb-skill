@@ -200,7 +200,7 @@ variables/guards) so a new event genuinely makes progress.
 decrease does not exist yet*, then make it `convergent` in the refinement that
 introduces the loop counter (where the `VARIANT` — typically a **gap** like `n − i`,
 or a shrinking **set** — first makes sense). See
-[real-world-patterns.md](real-world-patterns.md) (Algorithm development by refinement)
+[patterns-algorithms.md](patterns-algorithms.md) (Algorithm development by refinement)
 and the worked `examples/array_maximum`.
 
 ## Witnesses (`WITH`)
@@ -285,6 +285,35 @@ step; abstract hard conditions as booleans/non-determinism and make them concret
 later. For each step decide **superposition vs data refinement**, and write the
 **gluing invariant before refining the events**. Expect to iterate the plan as
 model checking (and, beyond this skill, proof) exposes missing invariants or guards.
+
+### Two ladder shapes and the requirement ledger
+
+Published developments use at least two successful refinement shapes:
+
+- a **feature ladder**, where each level adds one user-visible concern (arrival-manager
+  interaction and CDIS display features); or
+- a **subsystem ladder**, where each level adds a dependent group of services from a
+  standard (partition/process management, IPC, then health monitoring in ARINC 653).
+
+Before authoring either shape, keep a requirement-to-refinement ledger:
+
+| Step | Requirement/concern | New or replaced state | Affected events | Invariant/gluing relation | Validation question |
+|---|---|---|---|---|---|
+| `m0` | Core observable service | Minimal state | Core events | Core safety property | Can success and forbidden scenarios be distinguished? |
+| `m1` | One named concern | State needed only by it | Exact event subset | Type + safety/gluing rule | Does it constrain or split the intended behaviour? |
+
+Use the ledger to choose steps, not to justify a chain after the fact. If a row
+contains unrelated concerns, split it. When a step only strengthens inherited events
+for its new concern, use `extends` so the review view exposes the delta instead of
+restating every inherited guard and action.
+
+For a normative standard, extend the ledger with the source section, assumptions,
+and evidence status. A formal model is also a requirements-review artifact: the
+ARINC 653 formalisation reported three errors and three incomplete specifications.
+
+Evidence: [AMAN](https://abz-conf.org/publication/mammarl23/),
+[ARINC 653](https://lvpgroup.github.io/papers/ISSRE2015.pdf), and
+[CDIS](https://eprints.soton.ac.uk/264964/).
 
 ### Checklist per refinement step
 

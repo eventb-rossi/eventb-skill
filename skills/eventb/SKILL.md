@@ -58,8 +58,12 @@ the explanation in `README.md`.
 | Exact `.eventb` grammar and action forms | `references/syntax.md` |
 | An operator or its precedence | `references/math-toolkit.md` |
 | Help choosing state, invariants, or events | `references/modelling.md` |
-| A genuine refinement step | `references/refinement.md` |
-| A recurring/domain or source-grounded industrial pattern | the matching heading in `references/patterns.md` or `references/real-world-patterns.md` |
+| A genuine refinement step, or planning a chain | `references/refinement.md` |
+| A core reactive-system pattern | the matching heading in `references/patterns.md` |
+| Discrete time, deadlines, modes, or sensors/actuators | `references/patterns-control.md` |
+| Multiple participants: topology, rounds, consensus, channels, long-running operations | `references/patterns-distributed.md` |
+| Access control, authorization policy, or reservation | `references/patterns-security.md` |
+| Deriving a loop from a postcondition, or an interpreter/ISA | `references/patterns-algorithms.md` |
 | CLI troubleshooting or a conditional advanced command | `references/tooling.md` |
 | Final design review | `references/best-practices.md` |
 

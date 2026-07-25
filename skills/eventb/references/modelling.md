@@ -108,7 +108,10 @@ Pick the mathematical object that makes the safety property easiest to *state* �
 relation/function for a policy or graph, a `status` function for a per-entity
 lifecycle, a function of time for rates of change, an array as a function `1 ‥ n →
 VALUE` for algorithm data. These are worked out, with the events that go with them, by
-domain in [real-world-patterns.md](real-world-patterns.md).
+domain in [patterns-control.md](patterns-control.md) (time, modes, lifecycles),
+[patterns-distributed.md](patterns-distributed.md) (topology, channels),
+[patterns-security.md](patterns-security.md) (policy relations), and
+[patterns-algorithms.md](patterns-algorithms.md) (arrays, machine state).
 
 One shape worth stating here: an **optional / nullable** single value can't be
 "absent" from a typed variable, so give the type a sentinel constant (`null ∈ REF`, or

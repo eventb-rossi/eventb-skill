@@ -125,8 +125,9 @@ and as a review pass before declaring a model done.
 - **Provide a witness (`WITH`)** for every disappeared abstract parameter or
   non-deterministic after-value; none is needed for kept variables.
 - **Reuse named patterns; instantiate by renaming.** Build a small catalogue (see
-  `patterns.md` for core reactive-system shapes and `real-world-patterns.md` for
-  domain idioms) and apply it across similar connections.
+  `patterns.md` for core reactive-system shapes and the `patterns-control.md`,
+  `patterns-distributed.md`, `patterns-security.md`, and `patterns-algorithms.md`
+  field guides for domain idioms) and apply it across similar connections.
 - **Layer independent security mechanisms.** Keep core authorization, RBAC,
   integrity, confidentiality/information flow, and implementation representation in
   planned levels; centralise typed helper relations/functions and keep a

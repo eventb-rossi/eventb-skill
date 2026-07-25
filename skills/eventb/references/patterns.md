@@ -5,10 +5,13 @@ protocol, a bridge controller. Each is a *shape* — variables, events, guards,
 invariants — you instantiate by renaming. Pick the pattern that matches the
 requirement, then refine it into your model.
 
-These are the *core* reactive-system patterns. For idioms specific to a domain —
-real-time/timing, modes & state machines, distributed protocols, access control,
-algorithm-development-by-refinement, interpreters — see
-[real-world-patterns.md](real-world-patterns.md).
+These are the *core* reactive-system patterns. For idioms specific to a domain, see the
+field guides: [patterns-control.md](patterns-control.md) (real-time/timing, modes &
+state machines, sensors & actuators), [patterns-distributed.md](patterns-distributed.md)
+(distributed protocols, channels, long-running operations),
+[patterns-security.md](patterns-security.md) (access control and policy), and
+[patterns-algorithms.md](patterns-algorithms.md) (algorithm development by refinement,
+interpreters).
 
 ## 1. Controller vs environment split (reactive systems)
 
@@ -95,7 +98,7 @@ encode them as an integer interval `0 ‥ Top` so safety becomes arithmetic; whe
 *allowed transitions* are the interesting part, declare them as a constant relation
 `trans ∈ MODE ↔ MODE` in a context and let one generic event test an `ANY` parameter
 against it (`mode ↦ nx ∈ trans`). Both are in
-[real-world-patterns.md](real-world-patterns.md) (Modes and state machines), along
+[patterns-control.md](patterns-control.md) (Modes and state machines), along
 with per-entity lifecycles (a `status` function or a family of disjoint phase-sets).
 
 ## 6. "False"/no-op companion event
@@ -141,8 +144,8 @@ model to avoid inventing artificial gluing variables just so a new event can ref
 `skip`.
 
 **Unreliable channels.** For loss and recovery — a silent `drop` daemon and a
-bounded-retransmission counter — see [real-world-patterns.md](real-world-patterns.md)
-(Communication channels).
+bounded-retransmission counter — see
+[patterns-distributed.md](patterns-distributed.md) (Communication channels).
 
 ## Minor reusable idioms
 
