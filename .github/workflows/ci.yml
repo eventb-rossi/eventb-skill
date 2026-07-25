@@ -1,0 +1,132 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  # No leading `v`: this is rossi-action's `version` input.
+  ROSSI_VERSION: "0.1.8"
+  # The opposite convention: eventb-animate's setup action wants a release tag, so the
+  # `v` is prefixed at the use site. Quoted because unquoted it is a YAML float, and a
+  # future 6.10 would silently become 6.1.
+  ANIMATE_VERSION: "6.4"
+
+jobs:
+  validate:
+    name: Spec and conventions
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Spec conformance and repository conventions
+        run: python3 scripts/validate.py --no-tools --verbose
+
+      - name: Generated catalogs are up to date
+        run: python3 scripts/build_index.py --check
+
+      # A second opinion from the specification's own reference implementation, which
+      # parses frontmatter with strictyaml. Our validator covers the same rules, but an
+      # independent parser catches anything our own reading of the spec got wrong.
+      - name: Upstream reference validator
+        run: |
+          set -euo pipefail
+          python3 -m venv "$RUNNER_TEMP/skills-ref"
+          "$RUNNER_TEMP/skills-ref/bin/pip" install --quiet \
+            "git+https://github.com/agentskills/agentskills.git#subdirectory=skills-ref"
+          for skill in skills/*/; do
+            "$RUNNER_TEMP/skills-ref/bin/skills-ref" validate "${skill%/}"
+          done
+
+  models:
+    name: Model-check the examples
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      # rossi-action and eventb-checker each publish their findings to code scanning,
+      # under separate categories.
+      security-events: write
+    steps:
+      - uses: actions/checkout@v7
+
+      # Installs the pinned rossi — checksum-verified, on PATH for every step below — and
+      # is the gate on rossi's advisory lints: EB011, EB012, EB014 and EB023 exit 0 on
+      # their own, so nothing else here would fail on them. Findings are annotated on the
+      # diff and published to code scanning; the action skips the upload for a pull request
+      # from a fork, which cannot be granted `security-events: write`.
+      - name: Validate the examples with rossi
+        uses: eventb-rossi/rossi-action@v1
+        with:
+          version: ${{ env.ROSSI_VERSION }}
+          path: skills/*/examples/*/
+          commands: validate,fmt-check
+          deny-warnings: "true"
+          sarif: "true"
+          upload-sarif: "true"
+          category: rossi
+
+      # Installs Temurin 21 and a checksum-verified eventb-animate launcher on PATH, and
+      # caches the jar keyed on the resolved tag. This is the only step in the job that
+      # needs a JDK of its own: eventb-checker's action sets one up internally.
+      - name: Install eventb-animate
+        uses: eventb-rossi/eventb-animate/setup@v6.4
+        with:
+          version: v${{ env.ANIMATE_VERSION }}
+
+      - name: Report tool versions
+        run: |
+          rossi --version
+          eventb-animate --version
+
+      # Formats, validates, builds, model-checks and WD-checks every bundled example at
+      # every refinement level — the same gate SKILL.md sets for a model it produces.
+      - name: Event-B gates
+        run: make check-models
+
+      # The Rodin archives a user would open, and the input to the two independent
+      # implementations below: eventb-animate model-checks them with ProB (already done in
+      # `make check-models`) and eventb-checker re-runs the static checks on the JVM.
+      - name: Build model archives
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/models"
+          for example in skills/*/examples/*/; do
+            rossi build "$example" -o "$RUNNER_TEMP/models/$(basename "$example").zip"
+          done
+
+      # Everything above validates the `.eventb` source tree; this validates what rossi
+      # wrote and reads back, so a regression in the archive writer surfaces here rather
+      # than in a user's Rodin session. No SARIF: these paths are under $RUNNER_TEMP and
+      # would not anchor to anything in the repository tree.
+      - name: Validate the built archives
+        run: rossi validate --deny-warnings "$RUNNER_TEMP"/models/*.zip
+
+      # A second opinion from a different implementation: eventb-checker is a JVM checker of
+      # Rodin's static rules, so agreement with rossi's Rust parser is evidence rather than
+      # one tool confirming itself. ProB covers reachable behaviour, not typing and
+      # refinement rules, so this is the only cross-check of those. Its own `category`,
+      # because code scanning rejects an upload whose runs share one with rossi-action's.
+      # Unlike rossi-action it does not skip the upload for a fork itself, and a fork's
+      # token cannot hold `security-events: write` — so drive the input instead of guarding
+      # the step, and the models still get checked on a fork's pull request.
+      - name: Independent validation with eventb-checker
+        uses: eventb-rossi/eventb-checker@v1.13
+        with:
+          model-path: ${{ runner.temp }}/models/*.zip
+          category: eventb-checker
+          upload-sarif: >-
+            ${{ github.event_name != 'pull_request'
+                || github.event.pull_request.head.repo.full_name == github.repository }}
+
+      - name: Upload model archives
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: example-models
+          path: ${{ runner.temp }}/models/*.zip
+          if-no-files-found: error
