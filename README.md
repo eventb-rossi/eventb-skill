@@ -64,8 +64,8 @@ question comes up.
 
 | Reference | Lines | The agent reads it when it needs |
 |---|---|---|
-| [`syntax.md`](skills/eventb/references/syntax.md) | 225 | Exact `.eventb` grammar, component and action forms |
-| [`math-toolkit.md`](skills/eventb/references/math-toolkit.md) | 193 | An operator, its ASCII spelling, or its precedence |
+| [`syntax.md`](skills/eventb/references/syntax.md) | 215 | Exact `.eventb` grammar, component and action forms |
+| [`math-toolkit.md`](skills/eventb/references/math-toolkit.md) | 196 | An operator, its ASCII spelling, or its precedence |
 | [`modelling.md`](skills/eventb/references/modelling.md) | 192 | Help choosing state, invariants or events |
 | [`refinement.md`](skills/eventb/references/refinement.md) | 332 | A genuine refinement step, or a chain to plan |
 | [`patterns.md`](skills/eventb/references/patterns.md) | 158 | A core reactive-system pattern |

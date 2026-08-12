@@ -26,8 +26,8 @@ best single illustration of an Event-B **refinement chain**.
 - **Event splitting** — abstract `ML_out` becomes `ML_out_1` / `ML_out_2` at
   level 2 (both `REFINES ML_out`), distinguishing the last car (turns the light
   red) from the rest.
-- **Enumerated set + booleans** — `COLOR = {green, red}`; `BOOL`, `TRUE`/`FALSE`,
-  and a `BOOL → {0,1}` conversion used to build a numeric variant.
+- **Enumerated set + booleans** — `partition(COLOR, {green}, {red})`; `BOOL`,
+  `TRUE`/`FALSE`, and a `BOOL → {0,1}` conversion used to build a numeric variant.
 
 ## Run it
 

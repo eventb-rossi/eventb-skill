@@ -50,8 +50,7 @@ CONSTANTS
     red
     green
 AXIOMS
-    @axm1 COLOR = {green, red}
-    @axm2 green ≠ red
+    @axm1 partition(COLOR, {green}, {red})
     @thm1 theorem  green ∈ COLOR
 END
 ```
@@ -59,19 +58,10 @@ END
 | Clause | Meaning |
 |---|---|
 | `EXTENDS` | inherit the sets/constants of other contexts (transitive). |
-| `SETS` | declare fresh **carrier sets** (new pairwise-disjoint types; assumed non-empty). |
+| `SETS` | declare fresh **carrier sets** (new pairwise-disjoint types; assumed non-empty), by name only. To *enumerate* one, list its members in `CONSTANTS` and give a single `partition` axiom as above — see `math-toolkit.md`. |
 | `CONSTANTS` | declare constant identifiers. |
 | `AXIOMS` | labelled predicates the constants satisfy (assumed true). |
 | `THEOREMS` | labelled predicates that should *follow from* the axioms (out of scope here, but accepted). |
-
-**Enumerated set shorthand** — instead of declaring the constants and an axiom
-separately, write the members inline; this introduces the elements as distinct
-constants of that type:
-
-```
-SETS
-    COLOR = {green, red}
-```
 
 **Theorems** can also be flagged inline inside `AXIOMS`/`INVARIANTS` with the
 `theorem` keyword (either order): `@thm1 theorem P` or `theorem @thm1 P`.

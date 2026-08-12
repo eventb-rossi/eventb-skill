@@ -64,9 +64,12 @@ Set-valued operators written as **application** (identifier + parentheses):
 > as `total_out ≤ total_in` expresses **solvency**, not full conservation — it silently
 > misses the under-counting direction.
 
-`partition(S, A, B)` asserts the parts are disjoint and cover `S`. The parts may be
-**singletons** — `partition(COLOUR, {red}, {green})`, the usual enumeration — or named
-**subsets** that are themselves partitioned, building a structured/hierarchical type:
+`partition(S, A, B)` asserts the parts are disjoint and cover `S`. With **singleton** parts —
+`partition(COLOR, {red}, {green})` — it is *the* way to enumerate a carrier set: the members
+are ordinary `CONSTANTS`, coverage fixes `S` to exactly them, and disjointness of the
+singletons is what makes them pairwise distinct. It stays one axiom where explicit `≠` pairs
+grow quadratically. The parts may instead be named **subsets** that are themselves
+partitioned, building a structured/hierarchical type:
 `partition(PERM, USER_PERM, GROUP_PERM)` then `partition(USER_PERM, {read}, {write})`.
 
 ## Numbers
