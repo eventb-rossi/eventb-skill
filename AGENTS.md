@@ -84,6 +84,13 @@ to rossi 0.1.8 and `eventb-animate` 6.4 meant `SKILL.md` (×2), `references/tool
 `scripts/validate.py` and `.github/workflows/ci.yml` — then `make build`, because the
 catalogs embed the `compatibility` string and the generated prerequisites blurb.
 
+**Release tags track the skill's `metadata.version`.** A tag is `v<metadata.version>` on the
+commit that sets it — `v1.1.1` for `version: "1.1.1"`. Nothing consumes tags (installation
+follows the default branch and CI does not run on them), so they are markers for readers;
+their one job is to name a skill version, which they cannot do if they count separately.
+The legacy `v1.0.0` predates this rule and sits on a commit whose `metadata.version` was
+already `1.1.0` — leave it, do not renumber history to match.
+
 ## Examples
 
 An example is a real project directory, not an illustration: CI formats, validates,
