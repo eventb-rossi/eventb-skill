@@ -68,7 +68,10 @@ Set-valued operators written as **application** (identifier + parentheses):
 `partition(COLOR, {red}, {green})` — it is *the* way to enumerate a carrier set: the members
 are ordinary `CONSTANTS`, coverage fixes `S` to exactly them, and disjointness of the
 singletons is what makes them pairwise distinct. It stays one axiom where explicit `≠` pairs
-grow quadratically. The parts may instead be named **subsets** that are themselves
+grow quadratically. **Do not restate that distinctness afterwards**: an `a ≠ b` axiom or
+`theorem` follows from the partition, so it adds no assurance and is not free — one such
+theorem disabled ProB's symmetry reduction and doubled a reported state count. The parts may
+instead be named **subsets** that are themselves
 partitioned, building a structured/hierarchical type:
 `partition(PERM, USER_PERM, GROUP_PERM)` then `partition(USER_PERM, {read}, {write})`.
 

@@ -64,8 +64,8 @@ question comes up.
 
 | Reference | Lines | The agent reads it when it needs |
 |---|---|---|
-| [`syntax.md`](skills/eventb/references/syntax.md) | 215 | Exact `.eventb` grammar, component and action forms |
-| [`math-toolkit.md`](skills/eventb/references/math-toolkit.md) | 196 | An operator, its ASCII spelling, or its precedence |
+| [`syntax.md`](skills/eventb/references/syntax.md) | 218 | Exact `.eventb` grammar, component and action forms |
+| [`math-toolkit.md`](skills/eventb/references/math-toolkit.md) | 199 | An operator, its ASCII spelling, or its precedence |
 | [`modelling.md`](skills/eventb/references/modelling.md) | 192 | Help choosing state, invariants or events |
 | [`refinement.md`](skills/eventb/references/refinement.md) | 332 | A genuine refinement step, or a chain to plan |
 | [`patterns.md`](skills/eventb/references/patterns.md) | 158 | A core reactive-system pattern |
@@ -74,7 +74,7 @@ question comes up.
 | [`patterns-security.md`](skills/eventb/references/patterns-security.md) | 89 | Access control, authorization policy, reservation |
 | [`patterns-algorithms.md`](skills/eventb/references/patterns-algorithms.md) | 156 | A loop derived from a postcondition, or an interpreter |
 | [`tooling.md`](skills/eventb/references/tooling.md) | 411 | CLI troubleshooting or a conditional advanced command |
-| [`best-practices.md`](skills/eventb/references/best-practices.md) | 193 | A final design review |
+| [`best-practices.md`](skills/eventb/references/best-practices.md) | 200 | A final design review |
 
 Three worked developments ship with the skill. Each is a real project directory that CI
 formats, validates, builds, model-checks and WD-checks at **every** refinement level:

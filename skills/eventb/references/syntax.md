@@ -51,7 +51,7 @@ CONSTANTS
     green
 AXIOMS
     @axm1 partition(COLOR, {green}, {red})
-    @thm1 theorem  green ∈ COLOR
+    @thm1 theorem  d ∈ ℕ1
 END
 ```
 
@@ -64,7 +64,10 @@ END
 | `THEOREMS` | labelled predicates that should *follow from* the axioms (out of scope here, but accepted). |
 
 **Theorems** can also be flagged inline inside `AXIOMS`/`INVARIANTS` with the
-`theorem` keyword (either order): `@thm1 theorem P` or `theorem @thm1 P`.
+`theorem` keyword (either order): `@thm1 theorem P` or `theorem @thm1 P`. Write one
+only when it *derives* something later obligations reuse — `@thm1` above needs both
+inherited axioms. `partition` already gives `green ≠ red`, so restating it as a
+theorem proves nothing.
 
 ## Machine
 

@@ -98,6 +98,11 @@ and as a review pass before declaring a model done.
   preserves the type", or a lookup table's totality (`theorem @t decode ∈ RAW → CMD`,
   which also makes every later `decode(x)` well-defined) — so later obligations get
   them for free.
+- **A theorem earns its place only as a derived lemma.** Pre-prove what a later
+  obligation actually reuses; drop anything one adjacent axiom discharges outright.
+  `partition(S, {a}, {b})` already asserts `a ≠ b`, so an extra `theorem a ≠ b` buys
+  nothing and is not free: one measurably disabled ProB's symmetry reduction and
+  doubled the reported state count.
 - **Trace a normative standard explicitly.** Map each section/service to assumptions,
   static declarations, run-time state, events, invariants, refinement level, and
   proof/validation evidence. Record ambiguities instead of resolving them silently.
@@ -184,6 +189,8 @@ and as a review pass before declaring a model done.
 - A phase is reconstructed from three+ booleans → introduce a mode variable.
 - A new event has no variant / convergence story → it can diverge; fix it.
 - An invariant needs many special cases → the events may be doing too much; simplify.
+- A theorem restates what one adjacent axiom already says → delete it; a theorem is for
+  a lemma later obligations reuse.
 - `tick` has a screenful of disjuncts → introduce phases, deadline data, or a
   generated/exhaustive scheduling table.
 - Authorization formulas are copied into many guards → define one typed policy
