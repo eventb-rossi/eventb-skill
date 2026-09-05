@@ -8,7 +8,7 @@ skill's content.
 ## Setup
 
 You need Python 3.9+ for the tooling. To run the Event-B gates you also need `rossi`
-0.1.8+ and `eventb-animate` 6.4+ on `PATH`; see [docs/install.md](docs/install.md).
+0.2.0+ and `eventb-animate` 6.4+ on `PATH`; see [docs/install.md](docs/install.md).
 
 ```sh
 git clone https://github.com/eventb-rossi/eventb-skill

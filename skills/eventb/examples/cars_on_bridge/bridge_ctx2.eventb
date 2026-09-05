@@ -13,4 +13,3 @@ AXIOMS
     @axm3 b_2_n(TRUE) = 1
     @axm4 b_2_n(FALSE) = 0
 END
-

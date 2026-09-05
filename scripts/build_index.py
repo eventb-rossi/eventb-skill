@@ -126,7 +126,7 @@ def render_llms(skills: list[dict]) -> str:
         "",
         "The skill drives two command-line tools and checks for them before modelling:",
         "",
-        "- [rossi](https://github.com/eventb-rossi/rossi) 0.1.8+ — parser, static checker,",
+        "- [rossi](https://github.com/eventb-rossi/rossi) 0.2.0+ — parser, static checker,",
         "  formatter and Rodin round-tripping for `.eventb` text.",
         "- [eventb-animate](https://github.com/eventb-rossi/eventb-animate) 6.4+ — ProB-backed",
         "  model checking, well-definedness gates and trace replay. Needs Java 21+.",

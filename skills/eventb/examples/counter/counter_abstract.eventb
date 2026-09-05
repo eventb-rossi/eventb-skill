@@ -29,4 +29,3 @@ EVENTS
         @act1 count :∣ count' ∈ ℕ ∧ count' < count
     END
 END
-

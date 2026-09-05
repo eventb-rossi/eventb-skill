@@ -16,13 +16,13 @@ way and the tools happily take many files at once.
 ## Conventions the formatter enforces
 
 - **Keywords are case-insensitive on input** (`machine`, `Machine`, `MACHINE` all
-  parse). `rossi fmt` canonicalizes **structural keywords to UPPERCASE**
-  (`MACHINE`, `SEES`, `INVARIANTS`, `EVENT`, `THEN`, `END`, …).
+  parse). `rossi fmt --style rossi` — this skill's style — canonicalizes structural
+  keywords to **UPPERCASE**; 0.2's default `--style camille` emits them lowercase.
 - **Operators may be ASCII or Unicode on input** (`:=`/`≔`, `:`/`∈`, `NAT`/`ℕ`,
   `|->`/`↦`, `<=`/`≤`). `rossi fmt` canonicalizes to **Unicode**. See
   `math-toolkit.md` for the full spelling table.
 - **Indentation** is four spaces; each clause keyword sits on its own line with its
-  payload indented under it. Let `rossi fmt -i` do this — don't format by hand.
+  payload indented under it. Let `rossi fmt -i --style rossi` do it, never by hand.
 - **Comments**: `// line` and `/* block */`. They parse, but `fmt` reflows them
   unpredictably (a line comment migrates onto the preceding token's line), so keep
   `.eventb` files comment-free and put prose in a sibling `README.md`.

@@ -6,4 +6,3 @@ AXIOMS
     @axm1 n ∈ ℕ1
     @axm2 f ∈ 1 ‥ n → ℤ
 END
-

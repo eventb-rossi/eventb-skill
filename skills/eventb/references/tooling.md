@@ -27,7 +27,7 @@ Require these tested minimum versions:
 
 | Tool | Minimum | Role |
 |---|---:|---|
-| `rossi` | 0.1.8 | text parser/formatter, static checker, Rodin conversion, LSP |
+| `rossi` | 0.2.0 | text parser/formatter, static checker, Rodin conversion, LSP |
 | `eventb-animate` | 6.4 | ProB/LTSmin model checking, report v3, trace v6, replay, proof gates |
 | LTSmin tools | 3.0.2 | optional sequential/symbolic external backends |
 

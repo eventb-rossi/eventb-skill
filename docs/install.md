@@ -6,7 +6,7 @@ first step is to check both and stop if either is missing.
 
 ## 1. Install the tools
 
-The skill requires `rossi` 0.1.8+ and `eventb-animate` 6.4+ on `PATH`, and a Java 21+
+The skill requires `rossi` 0.2.0+ and `eventb-animate` 6.4+ on `PATH`, and a Java 21+
 runtime for `eventb-animate`.
 
 ### macOS and Linux (Homebrew)

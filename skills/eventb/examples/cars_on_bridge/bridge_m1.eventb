@@ -59,4 +59,3 @@ EVENTS
         @act2 c ≔ c + 1
     END
 END
-

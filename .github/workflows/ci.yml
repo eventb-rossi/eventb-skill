@@ -11,7 +11,7 @@ permissions:
 
 env:
   # No leading `v`: this is rossi-action's `version` input.
-  ROSSI_VERSION: "0.1.8"
+  ROSSI_VERSION: "0.2.0"
   # The opposite convention: eventb-animate's setup action wants a release tag, so the
   # `v` is prefixed at the use site. Quoted because unquoted it is a YAML float, and a
   # future 6.10 would silently become 6.1.

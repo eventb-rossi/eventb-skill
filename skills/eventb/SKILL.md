@@ -8,7 +8,7 @@ description: >
   out of scope.
 license: Apache-2.0
 compatibility: >-
-  Requires the rossi CLI 0.1.8+ and eventb-animate 6.4+ on PATH (Homebrew tap
+  Requires the rossi CLI 0.2.0+ and eventb-animate 6.4+ on PATH (Homebrew tap
   eventb-rossi/tap, APT, COPR, or Scoop), and Java 21+ for eventb-animate. No
   network access needed at run time.
 metadata:
@@ -26,7 +26,7 @@ not author interactive Rodin proofs.
 
 ## 1. Check the required tools
 
-Require `rossi` 0.1.8+ and `eventb-animate` 6.4+. Check them; never install or
+Require `rossi` 0.2.0+ and `eventb-animate` 6.4+. Check them; never install or
 upgrade them yourself. If either is absent or older, stop and ask the user to do it.
 
 ```sh

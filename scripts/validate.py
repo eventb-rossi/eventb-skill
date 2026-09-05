@@ -522,10 +522,10 @@ def check_example_model(report: Report, skill: str, example: Path, workdir: Path
     problems = []
     # --deny-warnings, not just the default exit code: rossi's advisory lints (dead
     # variable, unmodified variable, incomplete INITIALISATION, shadowed name) exit 0, and
-    # a shipped example teaches whatever it contains. Needs rossi 0.1.8+.
+    # a shipped example teaches whatever it contains. Needs rossi 0.2.0+.
     for args, label in (
         (["rossi", "validate", "--deny-warnings", "."], "rossi-validate"),
-        (["rossi", "fmt", "--check", "."], "rossi-fmt-check"),
+        (["rossi", "fmt", "--check", "--style", "rossi", "."], "rossi-fmt-check"),
     ):
         proc = run(args, cwd=example)
         if proc.returncode != 0:

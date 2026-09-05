@@ -40,7 +40,7 @@ It will never install or upgrade them itself — if either is missing, it stops 
 
 | Tool | Minimum | Purpose |
 |---|---|---|
-| [`rossi`](https://github.com/eventb-rossi/rossi) | 0.1.8 | Parser, static checker, formatter, Rodin round-tripping |
+| [`rossi`](https://github.com/eventb-rossi/rossi) | 0.2.0 | Parser, static checker, formatter, Rodin round-tripping |
 | [`eventb-animate`](https://github.com/eventb-rossi/eventb-animate) | 6.4 | ProB model checking, well-definedness gates, trace replay (needs Java 21+) |
 
 ```sh
