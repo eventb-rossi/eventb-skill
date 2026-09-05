@@ -9,7 +9,7 @@
       "name": "eventb",
       "description": "Write and check Event-B formal models as `.eventb` text: contexts, machines, invariants, events, and justified refinement chains. Use for Event-B, Rodin, rossi, ProB/model checking, or requirements that need a discrete formal model. The core workflow uses rossi plus eventb-animate; interactive proof authoring is out of scope.",
       "entry_point": "skills/eventb/SKILL.md",
-      "version": "1.1.1",
+      "version": "1.2.0",
       "license": "Apache-2.0",
       "compatibility": "Requires the rossi CLI 0.2.0+ and eventb-animate 6.4+ on PATH (Homebrew tap eventb-rossi/tap, APT, COPR, or Scoop), and Java 21+ for eventb-animate. No network access needed at run time.",
       "references": [

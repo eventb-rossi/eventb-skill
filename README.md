@@ -58,7 +58,7 @@ Debian/Ubuntu (APT), Fedora (COPR) and Windows (Scoop) packages are listed in
 
 ## What the skill contains
 
-`SKILL.md` is 189 lines — the workflow an agent needs on every run, and a routing table
+`SKILL.md` is 198 lines — the workflow an agent needs on every run, and a routing table
 that names exactly one file per question. Everything else is loaded only when that
 question comes up.
 

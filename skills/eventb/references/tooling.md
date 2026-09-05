@@ -44,9 +44,7 @@ when the user requests that backend or it is otherwise justified:
 
 ```sh
 command -v prob2lts-seq prob2lts-sym ltsmin-printtrace
-prob2lts-seq --version
-prob2lts-sym --version
-ltsmin-printtrace --version
+prob2lts-seq --version && prob2lts-sym --version && ltsmin-printtrace --version
 ```
 
 LTSmin is optional and unavailable on Windows. For tools installed outside
@@ -70,10 +68,6 @@ checking.
 Read warnings as well as the exit code: a missing/ill-typed refinement witness may
 be reported as `event is inaccurate` without making `validate` or `build` fail.
 Treat that warning as a failed gate.
-
-Use the default ProB backend first. It supports the complete check surface,
-counterexample traces, event coverage, goals, LTL, and ProB's symbolic modes.
-Select LTSmin deliberately for its alternate sequential or symbolic engines.
 
 ## `rossi` commands
 
@@ -195,11 +189,23 @@ eventb-animate info --prefs model.zip \
 ```
 
 `MAX_INITIALISATIONS` caps setup/initial-state choices; `MAX_OPERATIONS` caps the
-enabled instances of each operation in a state. Raise only the cap required by the
-known finite scenario (for example `-p MAX_OPERATIONS=1000`) and rerun until the
-JSON completion is `complete`. Better still, reduce unnecessarily wide
+enabled instances of each operation in a state. Set the cap **strictly above** the
+known maximum, never equal to it: reaching the cap is itself the incompleteness
+signal, so an event with 16 enablings is still reported incomplete under
+`-p MAX_OPERATIONS=16` and needs headroom (64 works and adds no states). Rerun
+until the JSON completion is `complete`. Better still, reduce unnecessarily wide
 nondeterminism: a bit-update event is usually cheaper and clearer to explore than
 an event that guesses an entire policy relation.
+
+### Symmetry reduction is on by default
+
+`eventb-animate` ships `SYMMETRY_MODE = hash`; ProB's own default is `off`. A
+reported state count is therefore a quotient over symmetric deferred-set elements,
+and the reduction disengages when a seen context names individual carrier-set
+elements in a distinctness predicate — one measured model reported 58947 quotient
+states against 112510 concrete. Both settings still catch injected invariant
+violations: the issue is comparability, not soundness. Pin `-p SYMMETRY_MODE=off`
+when a state count is reported, and record the flag beside the number.
 
 ### Main options
 
@@ -249,9 +255,8 @@ Important backend rules:
   safety is required and one pass is enough.
 - `--ltsmin-por` applies only to `ltsmin-sequential`; symbolic LTSmin is
   incompatible with partial-order reduction.
-- Sequential LTSmin disables ProB hash symmetry by default so its external
-  trace can be replayed reliably. An explicit `-p SYMMETRY_MODE=...` overrides
-  this safeguard and may make replay fail.
+- Sequential LTSmin disables ProB hash symmetry so its external trace replays
+  reliably; an explicit `-p SYMMETRY_MODE=...` overrides that and may break replay.
 - Symbolic LTSmin produces a definite verdict but no trace or final state. Rerun
   a failure with `ltsmin-sequential` to save and inspect a counterexample.
 - ProB has no compatible final event-coverage or search-statistics data for the
@@ -348,13 +353,8 @@ eventb-animate replay --refine -m M2 -t trace_M1.json model.zip \
 `--refine-breadth` and `--refine-depth` bound adaptation. The adapted trace is
 overwritten at `--save`; failure to find an adaptation is exit 1.
 
-Reports and traces compose safely in one command:
-
-```sh
-eventb-animate --json report.json --save trace.json model.zip
-```
-
-The report records its saved trace path as `traceFile` when a trace was written.
+Reports and traces compose: `eventb-animate --json report.json --save trace.json
+model.zip` records the saved path in the report as `traceFile`.
 
 ## Proof-obligation gates
 
