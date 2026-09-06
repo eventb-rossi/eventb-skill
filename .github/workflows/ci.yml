@@ -58,13 +58,15 @@ jobs:
       # is the gate on rossi's advisory lints: EB011, EB012, EB014 and EB023 exit 0 on
       # their own, so nothing else here would fail on them. Findings are annotated on the
       # diff and published to code scanning; the action skips the upload for a pull request
-      # from a fork, which cannot be granted `security-events: write`.
+      # from a fork, which cannot be granted `security-events: write`. Formatting stays in
+      # `make check-models` below: that gate pins `--style rossi`, while the action's
+      # `fmt-check` has no style input and would inherit rossi's `camille` default.
       - name: Validate the examples with rossi
         uses: eventb-rossi/rossi-action@v1
         with:
           version: ${{ env.ROSSI_VERSION }}
           path: skills/*/examples/*/
-          commands: validate,fmt-check
+          commands: validate
           deny-warnings: "true"
           sarif: "true"
           upload-sarif: "true"
