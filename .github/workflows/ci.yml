@@ -103,10 +103,13 @@ jobs:
 
       # Everything above validates the `.eventb` source tree; this validates what rossi
       # wrote and reads back, so a regression in the archive writer surfaces here rather
-      # than in a user's Rodin session. No SARIF: these paths are under $RUNNER_TEMP and
-      # would not anchor to anything in the repository tree.
+      # than in a user's Rodin session. `rossi build` also emits fresh, unattempted proof
+      # obligations, so this archive read-back uses rossi's default error-only exit policy;
+      # the source validation above remains the strict warning gate.
+      # No SARIF: these paths are under $RUNNER_TEMP and would not anchor to anything in
+      # the repository tree.
       - name: Validate the built archives
-        run: rossi validate --deny-warnings "$RUNNER_TEMP"/models/*.zip
+        run: rossi validate "$RUNNER_TEMP"/models/*.zip
 
       # A second opinion from a different implementation: eventb-checker is a JVM checker of
       # Rodin's static rules, so agreement with rossi's Rust parser is evidence rather than
