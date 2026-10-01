@@ -76,7 +76,7 @@ jobs:
       # caches the jar keyed on the resolved tag. This is the only step in the job that
       # needs a JDK of its own: eventb-checker's action sets one up internally.
       - name: Install eventb-animate
-        uses: eventb-rossi/eventb-animate/setup@v6.5
+        uses: eventb-rossi/eventb-animate/setup@v7.0
         with:
           version: v${{ env.ANIMATE_VERSION }}
 
@@ -120,7 +120,7 @@ jobs:
       # token cannot hold `security-events: write` — so drive the input instead of guarding
       # the step, and the models still get checked on a fork's pull request.
       - name: Independent validation with eventb-checker
-        uses: eventb-rossi/eventb-checker@v1.13
+        uses: eventb-rossi/eventb-checker@v1.14
         with:
           model-path: ${{ runner.temp }}/models/*.zip
           category: eventb-checker
