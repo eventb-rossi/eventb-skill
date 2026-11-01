@@ -76,7 +76,7 @@ jobs:
       # caches the jar keyed on the resolved tag. This is the only step in the job that
       # needs a JDK of its own: eventb-checker's action sets one up internally.
       - name: Install eventb-animate
-        uses: eventb-rossi/eventb-animate/setup@v7.0
+        uses: eventb-rossi/eventb-animate/setup@v7.1
         with:
           version: v${{ env.ANIMATE_VERSION }}
 
